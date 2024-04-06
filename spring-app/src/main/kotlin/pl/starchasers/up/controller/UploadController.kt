@@ -64,7 +64,7 @@ class UploadController(
     @GetMapping("/u/{fileKey}")
     fun getAnonymousUpload(@PathVariable fileKey: String, request: HttpServletRequest, response: HttpServletResponse) {
         val (fileEntry, stream) = fileStorageService.getStoredFileRaw(FileKey(fileKey))
-        response.contentType = fileEntry.contentType.value
+        response.contentType = if (fileEntry.filename.value.endsWith(".mov")) "video/quicktime" else fileEntry.contentType.value
 
         response.addHeader(
             HttpHeaders.ACCEPT_RANGES,
